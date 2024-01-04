@@ -17,14 +17,12 @@
 //! [defmt]: https://github.com/knurling-rs/defmt/
 
 #![no_std]
-#![cfg(target_os = "none")]
 #![doc(html_logo_url = "https://knurling.ferrous-systems.com/knurling_logo_light_text.svg")]
 
 #[cfg(all(not(cortex_m), not(target_arch = "riscv32")))]
 compile_error!("`panic-probe` only supports Cortex-M targets or riscv32");
 
 // Functionality `cfg`d out on platforms with OS/libstd.
-#[cfg(target_os = "none")]
 mod imp {
     use core::panic::PanicInfo;
     use core::sync::atomic::{AtomicBool, Ordering};
@@ -69,7 +67,6 @@ mod imp {
 ///     panic_probe::abort();
 /// }
 /// ```
-#[cfg(target_os = "none")]
 pub fn abort() -> ! {
     semihosting::process::abort();
 }
