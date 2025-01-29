@@ -17,7 +17,7 @@
 
 #[cfg(feature = "alloc")]
 extern crate alloc;
-
+extern crate core;
 // This must be in the root lib.rs, otherwise it doesn't appear in the final binary.
 
 /// The defmt ABI and wire format version.
@@ -57,7 +57,7 @@ pub use crate::{
     encoding::Encoder,
     formatter::{Formatter, Str},
     impls::adapter::{Debug2Format, Display2Format},
-    traits::{Format, Logger},
+    traits::{Format, Logger, Format2Debug},
 };
 
 #[cfg(all(test, not(feature = "unstable-test")))]

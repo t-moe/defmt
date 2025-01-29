@@ -26,6 +26,10 @@ macro_rules! arrays {
                     _ => export::fmt_slice(self),
                 }
             }
+
+            fn _core_fmt(&self, fmt: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                todo!()
+            }
         }
     };
 }

@@ -40,6 +40,10 @@ impl<T: fmt::Debug + ?Sized> Format for Debug2Format<'_, T> {
     fn _format_data(&self) {
         export::debug(&self.0);
     }
+
+    fn _core_fmt(&self, fmt: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        self.0.fmt(fmt)
+    }
 }
 
 /// An "adapter" type to feed `Display` values into defmt macros, which expect `defmt::Format` values.
@@ -83,5 +87,9 @@ impl<T: fmt::Display + ?Sized> Format for Display2Format<'_, T> {
 
     fn _format_data(&self) {
         export::display(&self.0);
+    }
+
+    fn _core_fmt(&self, fmt: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        self.0.fmt(fmt)
     }
 }

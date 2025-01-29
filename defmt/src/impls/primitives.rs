@@ -16,6 +16,11 @@ macro_rules! prim {
             fn _format_data(&$self_) {
                 $write
             }
+
+            #[inline]
+            fn _core_fmt(&self, fmt: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                core::fmt::Debug::fmt(self, fmt)
+            }
         }
     };
 }
@@ -36,7 +41,7 @@ prim!(f32, "{=f32}", self, export::f32(self));
 prim!(f64, "{=f64}", self, export::f64(self));
 prim!(str, "{=str}", self, export::str(self));
 prim!(bool, "{=bool}", self, export::bool(self));
-prim!(Str, "{=istr}", self, export::istr(self));
+//prim!(Str, "{=istr}", self, export::istr(self));
 prim!(char, "{=char}", self, export::char(self));
 
 impl<T> Format for [T]
@@ -53,6 +58,10 @@ where
     #[inline]
     fn _format_data(&self) {
         export::fmt_slice(self);
+    }
+
+    fn _core_fmt(&self, fmt: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        panic!("not yet")
     }
 }
 

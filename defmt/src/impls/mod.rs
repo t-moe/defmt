@@ -24,6 +24,11 @@ macro_rules! delegate_format {
         fn _format_data(&$self_) {
             <$ty as Format>::_format_data($val)
         }
+
+       #[inline]
+       fn _core_fmt(&$self_, fmt: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+            <$ty as Format>::_core_fmt($val, fmt)
+        }
     };
 }
 

@@ -1,3 +1,4 @@
+use core::fmt;
 use defmt_macros::internp;
 
 #[allow(unused_imports)]
@@ -57,7 +58,25 @@ pub trait Format {
         self.format(export::make_formatter());
         export::u16(&0); // terminator
     }
+
+    #[doc(hidden)]
+    fn _core_fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
+        fmt.write_str("<DEFMT_FAILED>")
+
+        // It would be nice to pack the core::fmt::Formatter into the defmt::Formatter and invoke self.format here.
+        // But thats not possible because core::fmt::Format does not impl Copy
+    }
 }
+
+
+pub struct Format2Debug<'a, T: Format + ?Sized>(pub &'a T);
+
+impl <'a, T: Format + ?Sized> fmt::Debug for Format2Debug<'a, T> {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
+     self.0._core_fmt(fmt)
+    }
+}
+
 
 /// Global logger acquire-release mechanism
 ///

@@ -49,6 +49,10 @@ impl Format for NoneError {
     }
 
     fn _format_data(&self) {}
+
+    fn _core_fmt(&self, fmt: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        write!(fmt, "Unwrap of a None option value")
+    }
 }
 
 /// Transform `self` into a `Result`

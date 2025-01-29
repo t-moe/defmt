@@ -60,6 +60,30 @@ impl Codegen {
 }
 
 fn encode_arg(ty: &Type, params: &[Parameter], arg_index: usize, arg: &Ident2) -> TokenStream2 {
+    return match ty {
+        Type::I8 | Type::I16 | Type::I32 | Type::I64 | Type::I128 | Type::Isize | Type::U8 | Type::U16 | Type::U32 | Type::U64 | Type::U128 | Type::Usize | Type::F32 | Type::F64
+        => {
+            quote!(#arg)
+        }
+
+        Type::Bool | Type::Str | Type::Char => quote!(#arg),
+
+        Type::IStr => todo!(),
+
+        Type::Format => quote!(defmt::Format2Debug(&#arg)),
+        Type::FormatSlice => quote!(#arg),
+        Type::FormatArray(_) => todo!(),
+
+        Type::Debug => todo!(),
+        Type::Display => todo!(),
+        Type::FormatSequence => unreachable!(),
+
+        Type::U8Slice => todo!(),
+
+        Type::U8Array(_) => todo!(),
+        Type::BitField(_) => todo!()
+    };
+
     match ty {
         Type::I8 => quote!(defmt::export::i8(#arg)),
         Type::I16 => quote!(defmt::export::i16(#arg)),

@@ -41,6 +41,10 @@ where
             }
         }
     }
+
+    fn _core_fmt(&self, fmt: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        todo!()
+    }
 }
 
 impl<T, E> Format for Result<T, E>
@@ -70,6 +74,10 @@ where
             }
         }
     }
+
+    fn _core_fmt(&self, fmt: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        todo!()
+    }
 }
 
 impl<T> Format for core::marker::PhantomData<T> {
@@ -82,6 +90,11 @@ impl<T> Format for core::marker::PhantomData<T> {
 
     #[inline]
     fn _format_data(&self) {}
+
+    #[inline]
+    fn _core_fmt(&self, fmt: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        write!(fmt, "PhantomData")
+    }
 }
 
 impl Format for core::convert::Infallible {
@@ -95,6 +108,11 @@ impl Format for core::convert::Infallible {
     #[inline]
     fn _format_data(&self) {
         unreachable!();
+    }
+
+    #[inline]
+    fn _core_fmt(&self, _fmt: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+        unreachable!()
     }
 }
 
